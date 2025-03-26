@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transform: Matrix</title>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: lightgreen;
+        text-align: center;
+        line-height: 100px;
+        font-weight: bold;
+        transition: transform 0.5s;
+      }
+
+      .box:hover {
+        transform: matrix(1, 0.5, 0.5, 1, 50, 50); /* 이동 + 기울기 + 크기 */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">Hover Me!</div>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animation Iteration Count Example</title>
+    <style>
+      /* 이동 애니메이션 정의 */
+      @keyframes moveRight {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(150px);
+        }
+      }
+
+      /* 공통 스타일 */
+      .box {
+        width: 200px;
+        height: 100px;
+        background-color: lightgreen;
+        text-align: center;
+        line-height: 100px;
+        font-weight: bold;
+        border-radius: 10px;
+        margin: 10px;
+        animation-name: moveRight;
+        animation-duration: 2s;
+      }
+
+      /* 애니메이션 반복 횟수 설정 */
+      .once {
+        animation-iteration-count: 1; /* 1회 실행 */
+      }
+
+      .three-times {
+        animation-iteration-count: 3; /* 3회 실행 */
+      }
+
+      .infinite {
+        animation-iteration-count: infinite; /* 무한 반복 */
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Animation Iteration Count Example</h2>
+    <div class="box once">1회 실행</div>
+    <div class="box three-times">3회 실행</div>
+    <div class="box infinite">무한 반복</div>
+  </body>
+</html>

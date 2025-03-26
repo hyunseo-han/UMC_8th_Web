@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animation Play State Example</title>
+    <style>
+      /* 이동 애니메이션 정의 */
+      @keyframes moveRight {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(150px);
+        }
+      }
+
+      /* 공통 스타일 */
+      .box {
+        width: 200px;
+        height: 100px;
+        background-color: lightgreen;
+        text-align: center;
+        line-height: 100px;
+        font-weight: bold;
+        border-radius: 10px;
+        margin: 10px;
+        animation-name: moveRight;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+        animation-play-state: running; /* 기본적으로 실행 */
+      }
+
+      /* 마우스를 올리면 애니메이션 멈춤 */
+      .box:hover {
+        animation-play-state: paused; /* 애니메이션 일시정지 */
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Animation Play State Example</h2>
+    <div class="box">마우스를 올리면 멈춤</div>
+  </body>
+</html>

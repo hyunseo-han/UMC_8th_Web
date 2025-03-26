@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animation Timing Function Example</title>
+    <style>
+      /* 이동 애니메이션 정의 */
+      @keyframes moveRight {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(150px);
+        }
+      }
+
+      /* 공통 스타일 */
+      .box {
+        width: 200px;
+        height: 100px;
+        background-color: lightgreen;
+        text-align: center;
+        line-height: 100px;
+        font-weight: bold;
+        border-radius: 10px;
+        margin: 10px;
+        animation-name: moveRight;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+      }
+
+      /* 애니메이션 속도 곡선 설정 */
+      .ease {
+        animation-timing-function: ease; /* 처음과 끝이 느리고 중간이 빠름 */
+      }
+
+      .linear {
+        animation-timing-function: linear; /* 일정한 속도로 움직임 */
+      }
+
+      .ease-in {
+        animation-timing-function: ease-in; /* 시작이 느리고 점점 빨라짐 */
+      }
+
+      .ease-out {
+        animation-timing-function: ease-out; /* 끝이 느려짐 */
+      }
+
+      .ease-in-out {
+        animation-timing-function: ease-in-out; /* 시작과 끝이 느리고 중간이 빠름 */
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Animation Timing Function Example</h2>
+    <div class="box ease">ease</div>
+    <div class="box linear">linear</div>
+    <div class="box ease-in">ease-in</div>
+    <div class="box ease-out">ease-out</div>
+    <div class="box ease-in-out">ease-in-out</div>
+  </body>
+</html>

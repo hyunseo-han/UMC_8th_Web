@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@keyframes Example</title>
+    <style>
+      /* 크기가 커지는 애니메이션 */
+      @keyframes grow {
+        from {
+          transform: scale(1);
+        }
+        to {
+          transform: scale(1.5);
+        }
+      }
+
+      /* 색상이 변하는 애니메이션 */
+      @keyframes changeColor {
+        0% {
+          background-color: lightgreen;
+        }
+        50% {
+          background-color: lightgreen;
+        }
+        100% {
+          background-color: lightcoral;
+        }
+      }
+
+      /* 좌우로 이동하는 애니메이션 */
+      @keyframes moveRight {
+        0% {
+          transform: translateX(0);
+        }
+        50% {
+          transform: translateX(100px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      /* 회전하는 애니메이션 */
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* 공통 스타일 */
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: lightgreen;
+        text-align: center;
+        line-height: 100px;
+        font-weight: bold;
+        border-radius: 10px;
+        margin: 20px;
+        display: inline-block;
+      }
+
+      /* 애니메이션 적용 */
+      .grow {
+        animation: grow 2s infinite alternate;
+      }
+      .color {
+        animation: changeColor 3s infinite alternate;
+      }
+      .move {
+        animation: moveRight 2s infinite alternate;
+      }
+      .spin {
+        animation: rotate 2s linear infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>@keyframes Example</h2>
+    <div class="box grow">크기 증가</div>
+    <div class="box color">색상 변화</div>
+    <div class="box move">좌우 이동</div>
+    <div class="box spin">회전</div>
+  </body>
+</html>

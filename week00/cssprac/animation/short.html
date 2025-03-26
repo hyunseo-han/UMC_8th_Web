@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animation Shorthand Example</title>
+    <style>
+      /* 애니메이션 정의 */
+      @keyframes bounce {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-50px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeMove {
+        0% {
+          opacity: 0;
+          transform: translateX(-50px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      /* 공통 스타일 */
+      .box {
+        width: 200px;
+        height: 100px;
+        background-color: lightgreen;
+        text-align: center;
+        line-height: 100px;
+        font-weight: bold;
+        border-radius: 10px;
+        margin: 20px;
+        display: inline-block;
+      }
+
+      /* 애니메이션 축약형 적용 */
+      .bounce {
+        animation: bounce 2s ease-in-out infinite alternate;
+      }
+
+      .fade-move {
+        animation: fadeMove 3s ease-in-out 1s forwards;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Animation Shorthand Example</h2>
+    <div class="box bounce">바운스 효과</div>
+    <div class="box fade-move">페이드 인 + 이동</div>
+  </body>
+</html>

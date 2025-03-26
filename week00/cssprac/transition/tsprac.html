@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transition & Transform Example</title>
+    <style>
+      /* 전체 페이지 정렬 */
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: white;
+      }
+
+      /* 마름모 모양을 위한 스타일 */
+      .diamond-container {
+        display: flex;
+        flex-direction: column;
+        gap: 40px; /* 요소 간 간격 */
+      }
+
+      .diamond {
+        width: 100px;
+        height: 100px;
+        background-color: lightpink;
+        transform: rotate(45deg); /* 마름모 형태로 회전 */
+        transition: all 0.5s ease-in-out; /* 트랜지션 효과 */
+      }
+
+      /* 마우스 호버 시 색 변경 */
+      .diamond:hover {
+        background-color: purple;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="diamond-container">
+      <div class="diamond"></div>
+      <div class="diamond"></div>
+      <div class="diamond"></div>
+    </div>
+  </body>
+</html>

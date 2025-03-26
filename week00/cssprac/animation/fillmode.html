@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animation Fill Mode Example</title>
+    <style>
+      /* 이동 애니메이션 정의 */
+      @keyframes moveRight {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(150px);
+        }
+      }
+
+      /* 공통 스타일 */
+      .box {
+        width: 200px;
+        height: 100px;
+        background-color: lightgreen;
+        text-align: center;
+        line-height: 100px;
+        font-weight: bold;
+        border-radius: 10px;
+        margin: 10px;
+        animation-name: moveRight;
+        animation-duration: 2s;
+        animation-delay: 2s;
+      }
+
+      /* 애니메이션 fill-mode 설정 */
+      .none {
+        animation-fill-mode: none; /* 애니메이션 전후 상태 유지 X */
+      }
+
+      .forwards {
+        animation-fill-mode: forwards; /* 애니메이션 종료 후 마지막 상태 유지 */
+      }
+
+      .backwards {
+        animation-fill-mode: backwards; /* 애니메이션 시작 전에 첫 프레임 적용 */
+      }
+
+      .both {
+        animation-fill-mode: both; /* 시작 전 첫 프레임 적용 + 종료 후 마지막 상태 유지 */
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Animation Fill Mode Example</h2>
+    <div class="box none">none</div>
+    <div class="box forwards">forwards</div>
+    <div class="box backwards">backwards</div>
+    <div class="box both">both</div>
+  </body>
+</html>

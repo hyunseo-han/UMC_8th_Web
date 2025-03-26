@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inline / Block / Inline-Block</title>
+    <style>
+      .inline-example {
+        display: inline;
+        width: 150px; /* 적용되지 않음 */
+        height: 100px; /* 적용되지 않음 */
+        background-color: lightpink;
+        margin: 10px;
+      }
+
+      .inline-block-example {
+        display: inline-block;
+        width: 150px;
+        height: 100px;
+        background-color: lightblue;
+        margin: 10px;
+      }
+
+      .block-example {
+        display: block;
+        width: 150px;
+        height: 100px;
+        background-color: lightgreen;
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Inline vs Block vs Inline-Block</h2>
+
+    <h3>Inline 요소 (가로 정렬되지만 너비/높이 지정 불가)</h3>
+    <span class="inline-example">Inline</span>
+    <span class="inline-example">Inline</span>
+
+    <br /><br />
+
+    <h3>Block 요소 (새 줄에서 시작, 너비/높이 지정 가능)</h3>
+    <div class="block-example">Block</div>
+    <div class="block-example">Block</div>
+
+    <br /><br />
+
+    <h3>Inline-Block 요소 (가로 정렬되면서도 너비/높이 지정 가능)</h3>
+    <span class="inline-block-example">Inline-Block</span>
+    <span class="inline-block-example">Inline-Block</span>
+  </body>
+</html>

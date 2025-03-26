@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animation Direction Example</title>
+    <style>
+      /* 이동 애니메이션 정의 */
+      @keyframes moveRight {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(150px);
+        }
+      }
+
+      /* 공통 스타일 */
+      .box {
+        width: 200px;
+        height: 100px;
+        background-color: lightgreen; /* 박스 색은 무조건 lightgreen */
+        text-align: center;
+        line-height: 100px;
+        font-weight: bold;
+        border-radius: 10px;
+        margin: 10px;
+        animation-name: moveRight;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+      }
+
+      /* 애니메이션 방향 설정 */
+      .normal {
+        animation-direction: normal; /* 정방향 */
+      }
+
+      .reverse {
+        animation-direction: reverse; /* 역방향 */
+      }
+
+      .alternate {
+        animation-direction: alternate; /* 정방향 → 역방향 반복 */
+      }
+
+      .alternate-reverse {
+        animation-direction: alternate-reverse; /* 역방향 → 정방향 반복 */
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Animation Direction Example</h2>
+    <div class="box normal">normal</div>
+    <div class="box reverse">reverse</div>
+    <div class="box alternate">alternate</div>
+    <div class="box alternate-reverse">alternate-reverse</div>
+  </body>
+</html>

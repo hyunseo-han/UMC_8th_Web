@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fade In Animation</title>
+    <style>
+      /* Fade-in 애니메이션 정의 */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        } /* 투명 */
+        to {
+          opacity: 1;
+        } /* 불투명 */
+      }
+
+      /* 애니메이션이 적용될 박스 스타일 */
+      .box {
+        width: 200px;
+        height: 100px;
+        background-color: lightgreen;
+        text-align: center;
+        line-height: 100px;
+        font-weight: bold;
+        border-radius: 10px;
+
+        /* 애니메이션 적용 */
+        animation-name: fadeIn;
+        animation-duration: 2s;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards; /* 마지막 상태(불투명) 유지 */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">Hello, World!</div>
+  </body>
+</html>

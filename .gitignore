@@ -1,0 +1,22 @@
+# macOS 시스템 파일 무시
+.DS_Store
+.localized
+
+# 바깥 폴더 무시 (상위 경로 접근 방지)
+../*
+../../*
+
+# 이 프로젝트 외 다른 폴더 무시
+/2023-1/
+/2023-2/
+/Algorithm_Study/
+/Eng/
+/Python_Basic/
+/ddwu_likelion_recruiting/
+/Git_Workbook/
+
+# 특수문자·한글이 포함된 폴더들 무시 (일단 전체 상위 경로 무시하므로 이것도 포함됨)
+/gitTest_*/
+/**11*/
+/*모든 기타 상위 폴더 무시*
+

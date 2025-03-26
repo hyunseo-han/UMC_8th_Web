@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flex & Grid Layout</title>
+    <style>
+      /* 전체 페이지 레이아웃 (Grid 사용) */
+      .container {
+        display: grid;
+        grid-template-rows: 80px 200px auto 80px;
+        width: 80%;
+        margin: 20px auto;
+        background-color: white;
+      }
+
+      /* HEADER & MENU (Grid 사용) */
+      .header-menu {
+        display: grid;
+        grid-template-columns: 1fr 2fr; /* 메뉴가 더 크게 */
+        grid-column: span 2;
+      }
+
+      .header,
+      .menu {
+        text-align: center;
+        padding: 20px;
+        font-weight: bold;
+        color: white;
+      }
+
+      .header {
+        background-color: black;
+      }
+
+      .menu {
+        background-color: crimson;
+      }
+
+      /* HERO 영역 */
+      .hero {
+        background-color: steelblue;
+        grid-column: span 2;
+        text-align: center;
+        padding: 50px;
+        font-weight: bold;
+        color: white;
+      }
+
+      /* MAIN CONTENT (Grid 사용) */
+      .main-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr; /* MAIN이 2배 더 크게 */
+        grid-column: span 2;
+      }
+
+      .main {
+        background-color: navy;
+        color: white;
+        text-align: center;
+        padding: 50px;
+        font-weight: bold;
+      }
+
+      /* 오른쪽 정렬된 사이드바 */
+      .right-sidebar {
+        display: grid;
+        align-items: end;
+      }
+
+      .image,
+      .extra {
+        background-color: lightblue;
+        text-align: center;
+        padding: 50px;
+        font-weight: bold;
+        width: 150px; /* 고정 너비 설정 */
+        justify-self: end; /* 오른쪽 정렬 */
+      }
+
+      .extra {
+        background-color: mediumseagreen;
+      }
+
+      /* BANNER */
+      .banner {
+        background-color: gold;
+        grid-column: span 2;
+        text-align: center;
+        padding: 30px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header & Menu -->
+      <div class="header-menu">
+        <div class="header">HEADER</div>
+        <div class="menu">MENU</div>
+      </div>
+
+      <!-- Hero Section -->
+      <div class="hero">HERO</div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <div class="main">MAIN</div>
+        <div class="right-sidebar">
+          <div class="image">IMAGE</div>
+          <div class="extra">EXTRA</div>
+        </div>
+      </div>
+
+      <!-- Banner -->
+      <div class="banner">BANNER</div>
+    </div>
+  </body>
+</html>

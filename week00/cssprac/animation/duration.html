@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animation Duration Example</title>
+    <style>
+      /* Fade-in 애니메이션 정의 */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        } /* 완전히 투명 */
+        to {
+          opacity: 1;
+        } /* 완전히 불투명 */
+      }
+
+      /* 공통 스타일 */
+      .box {
+        width: 200px;
+        height: 100px;
+        background-color: lightgreen;
+        text-align: center;
+        line-height: 100px;
+        font-weight: bold;
+        border-radius: 10px;
+        margin: 10px;
+        opacity: 0; /* 초기에 투명 */
+        animation-name: fadeIn;
+        animation-fill-mode: forwards; /* 애니메이션 종료 후 마지막 상태 유지 */
+      }
+
+      /* 애니메이션 지속 시간별 설정 */
+      .duration-2s {
+        animation-duration: 2s;
+      }
+
+      .duration-4s {
+        animation-duration: 4s;
+      }
+
+      .duration-6s {
+        animation-duration: 6s;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Animation Duration Example</h2>
+    <div class="box duration-2s">2초 지속</div>
+    <div class="box duration-4s">4초 지속</div>
+    <div class="box duration-6s">6초 지속</div>
+  </body>
+</html>

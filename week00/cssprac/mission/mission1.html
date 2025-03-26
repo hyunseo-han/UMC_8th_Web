@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navigation Bar</title>
+    <style>
+      /* 전체 네비게이션 바 스타일 */
+      .navbar {
+        display: flex;
+        justify-content: space-between; /* 좌우 정렬 */
+        align-items: center; /* 세로 중앙 정렬 */
+        padding: 15px 40px; /* 안쪽 여백 */
+        background-color: white; /* 배경색 */
+      }
+
+      /* 로고 영역 */
+      .logo {
+        display: flex;
+        align-items: center; /* 로고 이미지와 텍스트 정렬 */
+        cursor: pointer;
+      }
+
+      .logo img {
+        height: 40px; /* 로고 크기 */
+        margin-right: 10px;
+      }
+
+      .logo-text {
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      /* 네비게이션 메뉴 */
+      .nav-links {
+        display: flex;
+        gap: 30px; /* 메뉴 간격 */
+        list-style: none;
+      }
+
+      .nav-links li {
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .nav-links li a {
+        text-decoration: none;
+        color: black;
+        transition: color 0.3s;
+      }
+
+      /* 다크모드 아이콘 */
+      .dark-mode {
+        font-size: 20px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <!-- 로고 영역 -->
+      <div class="logo">
+        <img
+          src="https://www.smumc.co.kr/_next/image?url=%2Fimages%2Fmain-light-logo.webp&w=828&q=75"
+          alt="Logo"
+        />
+        <span class="logo-text">SMUMC</span>
+      </div>
+
+      <!-- 네비게이션 메뉴 -->
+      <ul class="nav-links">
+        <li><a href="#">PROJECTS</a></li>
+        <li><a href="#">MEMBERS</a></li>
+        <li><a href="#">NOTICE</a></li>
+      </ul>
+
+      <!-- 다크모드 아이콘 -->
+      <div class="dark-mode">🌞</div>
+    </nav>
+  </body>
+</html>
