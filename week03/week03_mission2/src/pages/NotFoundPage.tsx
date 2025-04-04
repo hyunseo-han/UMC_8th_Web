@@ -22,10 +22,10 @@ export default function NotFoundPage() {
 
       <div className="flex gap-4 mb-6">
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate(-1)}
           className="bg-gray-700 text-white font-semibold px-4 py-2 rounded-md hover:bg-gray-600 transition"
         >
-          홈으로 가기
+          이전으로 돌아가기
         </button>
       </div>
     </div>
