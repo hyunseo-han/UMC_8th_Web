@@ -16,9 +16,10 @@ export const Navbar = () => {
           key={to}
           to={to}
           className={({ isActive }) => {
-            return isActive ? "text-[#ffffff] fond-bold" : "text-gray-500";
+            return isActive ? "text-[#ffffff] font-bold" : "text-gray-500";
           }}
         >
+          {/* 현재 페이지의 URL이 to와 일치하면 isActive는 true | ex: 사용자가 /movies/popular에 있다면 인기 영화에만 isActive: true */}
           {label}
         </NavLink>
       ))}

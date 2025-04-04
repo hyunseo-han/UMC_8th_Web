@@ -1,5 +1,3 @@
-// 영화 데이터 타입 정의 파일 (Movie, MovieResponse 등)
-
 export type Movie = {
   adult: boolean;
   backdrop_path: string;
