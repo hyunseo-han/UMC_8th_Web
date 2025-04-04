@@ -5,12 +5,14 @@ import { MovieDetail, MovieCredits } from "../types/movie";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 
 export default function MovieDetailPage() {
-  const { movieId } = useParams<{ movieId: string }>();
-  const [movie, setMovie] = useState<MovieDetail | null>(null);
-  const [credits, setCredits] = useState<MovieCredits | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const { movieId } = useParams<{ movieId: string }>(); // URL에 있는 movieId를 가져옴 (예: /movie/1234 → movieId = "1234")
+  const [movie, setMovie] = useState<MovieDetail | null>(null); // movie: 영화 상세 정보 (MovieDetail 타입)
+  const [credits, setCredits] = useState<MovieCredits | null>(null); // credits: 출연진 및 제작진 정보 (MovieCredits 타입)
+  const [isLoading, setIsLoading] = useState(true); // isLoading: 로딩 중 여부
+  const [isError, setIsError] = useState(false); // isError: 에러 발생 여부
 
+  // movieId가 바뀔 때마다 실행됨
+  // axios.get()을 통해 두 개의 API 요청을 동시에 실행: movieUrl: 영화 상세 정보, creditUrl: 출연진 및 제작진
   useEffect(() => {
     const fetchMovieAndCredits = async () => {
       try {
@@ -60,9 +62,10 @@ export default function MovieDetailPage() {
     );
   }
 
-  const director = credits.crew.find((person) => person.job === "Director");
-  const topCast = credits.cast.slice(0, 5);
-  const fallbackImg = "https://via.placeholder.com/185x278?text=No+Image";
+  // 데이터 가공
+  const director = credits.crew.find((person) => person.job === "Director"); // 감독 추출: 제작진 중 job === "Director" 인 사람
+  const topCast = credits.cast.slice(0, 5); // 주요 배우: cast 리스트에서 상위 5명만 추출
+  const fallbackImg = "https://via.placeholder.com/185x278?text=No+Image"; // 이미지 경로가 없다면 기본 이미지(fallbackImg) 사용
 
   const getProfileUrl = (path: string | null) =>
     path ? `https://image.tmdb.org/t/p/w185${path}` : fallbackImg;
@@ -92,8 +95,10 @@ export default function MovieDetailPage() {
           <p>
             <strong>Genres:</strong>{" "}
             {movie.genres.map((g) => g.name).join(", ")}
+            {/* 장르 리스트는 join(", ")으로 문자열 변환 */}
           </p>
 
+          {/* 감독 정보 */}
           {director && (
             <div>
               <h2 className="text-xl font-semibold mt-6 mb-2">Director</h2>
@@ -111,6 +116,7 @@ export default function MovieDetailPage() {
           <div>
             <h2 className="text-xl font-semibold mt-6 mb-2">Top Cast</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+              {/* 출연 배우 리스트 */}
               {topCast.map((actor) => (
                 <div key={actor.cast_id} className="text-center">
                   <img
