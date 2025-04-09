@@ -11,7 +11,7 @@ export default function MovieDetailPage() {
   const [isLoading, setIsLoading] = useState(true); // isLoading: 로딩 중 여부
   const [isError, setIsError] = useState(false); // isError: 에러 발생 여부
 
-  // movieId가 바뀔 때마다 실행됨
+  // movieId가 바뀔 때마다 실행
   // axios.get()을 통해 두 개의 API 요청을 동시에 실행: movieUrl: 영화 상세 정보, creditUrl: 출연진 및 제작진
   useEffect(() => {
     const fetchMovieAndCredits = async () => {
