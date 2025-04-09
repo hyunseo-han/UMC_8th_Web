@@ -1,50 +1,28 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { MovieDetail, MovieCredits } from "../types/movie";
 import { LoadingSpinner } from "../components/LoadingSpinner";
+import useCustomFetch from "../hooks/useCustomFetch";
 
 export default function MovieDetailPage() {
-  const { movieId } = useParams<{ movieId: string }>(); // URL에 있는 movieId를 가져옴 (예: /movie/1234 → movieId = "1234")
-  const [movie, setMovie] = useState<MovieDetail | null>(null); // movie: 영화 상세 정보 (MovieDetail 타입)
-  const [credits, setCredits] = useState<MovieCredits | null>(null); // credits: 출연진 및 제작진 정보 (MovieCredits 타입)
-  const [isLoading, setIsLoading] = useState(true); // isLoading: 로딩 중 여부
-  const [isError, setIsError] = useState(false); // isError: 에러 발생 여부
+  const { movieId } = useParams<{ movieId: string }>();
 
-  // movieId가 바뀔 때마다 실행
-  // axios.get()을 통해 두 개의 API 요청을 동시에 실행: movieUrl: 영화 상세 정보, creditUrl: 출연진 및 제작진
-  useEffect(() => {
-    const fetchMovieAndCredits = async () => {
-      try {
-        setIsLoading(true);
+  const movieUrl = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
+  const creditUrl = `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`;
 
-        const movieUrl = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
-        const creditUrl = `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`;
+  const {
+    data: movie,
+    isPending: movieLoading,
+    isError: movieError,
+  } = useCustomFetch<MovieDetail>(movieUrl);
 
-        const [movieRes, creditRes] = await Promise.all([
-          axios.get<MovieDetail>(movieUrl, {
-            headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_TMDB_KEY}`,
-            },
-          }),
-          axios.get<MovieCredits>(creditUrl, {
-            headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_TMDB_KEY}`,
-            },
-          }),
-        ]);
+  const {
+    data: credits,
+    isPending: creditsLoading,
+    isError: creditsError,
+  } = useCustomFetch<MovieCredits>(creditUrl);
 
-        setMovie(movieRes.data);
-        setCredits(creditRes.data);
-      } catch (err) {
-        setIsError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (movieId) fetchMovieAndCredits();
-  }, [movieId]);
+  const isLoading = movieLoading || creditsLoading;
+  const isError = movieError || creditsError || !movie || !credits;
 
   if (isLoading) {
     return (
@@ -54,7 +32,7 @@ export default function MovieDetailPage() {
     );
   }
 
-  if (isError || !movie || !credits) {
+  if (isError) {
     return (
       <div className="text-center text-red-600 text-xl mt-10">
         Failed to load movie details.
@@ -62,10 +40,9 @@ export default function MovieDetailPage() {
     );
   }
 
-  // 데이터 가공
-  const director = credits.crew.find((person) => person.job === "Director"); // 감독 추출: 제작진 중 job === "Director" 인 사람
-  const topCast = credits.cast.slice(0, 5); // 주요 배우: cast 리스트에서 상위 5명만 추출
-  const fallbackImg = "https://via.placeholder.com/185x278?text=No+Image"; // 이미지 경로가 없다면 기본 이미지(fallbackImg) 사용
+  const director = credits.crew.find((person) => person.job === "Director");
+  const topCast = credits.cast.slice(0, 5);
+  const fallbackImg = "https://via.placeholder.com/185x278?text=No+Image";
 
   const getProfileUrl = (path: string | null) =>
     path ? `https://image.tmdb.org/t/p/w185${path}` : fallbackImg;
@@ -95,10 +72,8 @@ export default function MovieDetailPage() {
           <p>
             <strong>Genres:</strong>{" "}
             {movie.genres.map((g) => g.name).join(", ")}
-            {/* 장르 리스트는 join(", ")으로 문자열 변환 */}
           </p>
 
-          {/* 감독 정보 */}
           {director && (
             <div>
               <h2 className="text-xl font-semibold mt-6 mb-2">Director</h2>
@@ -116,7 +91,6 @@ export default function MovieDetailPage() {
           <div>
             <h2 className="text-xl font-semibold mt-6 mb-2">Top Cast</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-              {/* 출연 배우 리스트 */}
               {topCast.map((actor) => (
                 <div key={actor.cast_id} className="text-center">
                   <img
