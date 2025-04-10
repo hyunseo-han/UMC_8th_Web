@@ -23,8 +23,21 @@ export const postSignin = async (
   return data;
 };
 
+// export const getMyInfo = async (): Promise<ResponseMyInfoDto> => {
+//   const { data } = await axiosInstance.get("/v1/users/me");
+
+//   return data;
+// };
+
 export const getMyInfo = async (): Promise<ResponseMyInfoDto> => {
-  const { data } = await axiosInstance.get("/v1/users/me");
+  const token = localStorage.getItem("accessToken");
+  console.log("꺼낸 토큰:", token); // 이게 null, undefined, 혹은 "undefined"면 문제
+
+  const { data } = await axiosInstance.get("/v1/users/me", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return data;
 };

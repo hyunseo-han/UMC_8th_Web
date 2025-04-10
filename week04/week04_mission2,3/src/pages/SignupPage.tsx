@@ -5,6 +5,7 @@ import { ResponseSignupDto } from "../types/auth";
 import { postSignup } from "../apis/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const schema = z
   .object({
@@ -54,8 +55,30 @@ const SignupPage = () => {
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     // eslint-disable-next-line
     const { passwordCheck, ...rest } = data;
-    const response: ResponseSignupDto = await postSignup(rest);
-    console.log(response);
+    // const response: ResponseSignupDto = await postSignup(rest);
+    // console.log(response);
+
+    try {
+      const response: ResponseSignupDto = await postSignup(rest);
+      console.log("Signup successful:", response);
+
+      // 회원가입 성공 시 로그인 페이지로 이동
+      navigate("/login");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("❌ Signup error status:", error.response?.status);
+        console.error("❌ Signup error data:", error.response?.data);
+
+        if (error.response?.status === 409) {
+          alert("이미 존재하는 이메일입니다!");
+        } else {
+          alert("회원가입 중 오류가 발생했습니다.");
+        }
+      } else {
+        console.error("❌ Unknown signup error:", error);
+        alert("예기치 않은 오류가 발생했습니다.");
+      }
+    }
   };
 
   const handleNext = async () => {
@@ -64,6 +87,9 @@ const SignupPage = () => {
     );
     if (valid) setStep((prev) => prev + 1);
   };
+
+  console.log("로컬스토리지:", localStorage);
+  console.log("세션스토리지:", sessionStorage);
 
   return (
     <div className="flex flex-col items-center justify-center h-full gap-4">

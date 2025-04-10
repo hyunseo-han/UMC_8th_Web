@@ -23,7 +23,8 @@ const LoginPage = () => {
     console.log(values);
     try {
       const response: ResponseSigninDto = await postSignin(values);
-      setItem(response.data.accessToken);
+      setItem(response.data.accessToken); // 토큰 저장
+      navigate("/mypage"); // 이동 추가
     } catch (error) {
       alert(error);
     }
