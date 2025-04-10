@@ -53,11 +53,7 @@ const LoginPage = () => {
           {...getInputProps("email")}
           name="email"
           type={"email"}
-          className={`border border-[#ccc] w-[300px] p-[10px] focus:outline-pink-500 rounded-sm focus:outline-2 placeholder-gray-200 text-white ${
-            errors?.email && touched?.email
-              ? "border-red-500 bg-red-200"
-              : "border-gray-200"
-          }`}
+          className={`border border-[#ccc] w-[300px] p-[10px] focus:outline-pink-500 rounded-sm focus:outline-2 placeholder-gray-200 text-white `}
           placeholder="이메일을 입력해주세요"
         />
         {/* 새로고침 했을 때 경고 문구 안 보이게  */}
@@ -67,11 +63,7 @@ const LoginPage = () => {
         <input
           {...getInputProps("password")}
           type={"password"}
-          className={`border border-[#ccc] w-[300px] p-[10px] focus:outline-pink-500 rounded-sm focus:outline-2 placeholder-gray-200 text-white ${
-            errors?.password && touched?.password
-              ? "border-red-500 bg-red-200"
-              : "border-gray-200"
-          }`}
+          className={`border border-[#ccc] w-[300px] p-[10px] focus:outline-pink-500 rounded-sm focus:outline-2 placeholder-gray-200 text-white `}
           placeholder="비밀번호를 입력해주세요"
         />
         {errors?.password && touched?.password && (
