@@ -5,8 +5,9 @@ import { ResponseSignupDto } from "../types/auth";
 import { postSignup } from "../apis/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "axios"; //에러 타입 확인 용
 
+// email, password, passwordCheck, name에 대한 유효성 조건 정의
 const schema = z
   .object({
     email: z.string().email({ message: "올바른 이메일 형식이 아닙니다." }),
@@ -25,13 +26,15 @@ const schema = z
     path: ["passwordCheck"],
   });
 
-type FormFields = z.infer<typeof schema>;
+type FormFields = z.infer<typeof schema>; // Zod 스키마로부터 FormFields 타입 자동 추론
 
 const SignupPage = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordCheck, setShowPasswordCheck] = useState(false);
+
+  // useForm 사용
   const {
     register,
     handleSubmit,
@@ -52,9 +55,10 @@ const SignupPage = () => {
 
   const emailValue = watch("email");
 
+  // 제출 처리 함수
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     // eslint-disable-next-line
-    const { passwordCheck, ...rest } = data;
+    const { passwordCheck, ...rest } = data; // 서버에 보낼 필요 없어서 제외
     // const response: ResponseSignupDto = await postSignup(rest);
     // console.log(response);
 
@@ -62,9 +66,10 @@ const SignupPage = () => {
       const response: ResponseSignupDto = await postSignup(rest);
       console.log("Signup successful:", response);
 
-      // 회원가입 성공 시 로그인 페이지로 이동
+      // API 호출 후 회원가입 성공 시 로그인 페이지로 이동
       navigate("/login");
     } catch (error) {
+      // Axios 에러 구분하여 처리 (409: 이메일 중복, 그 외는 알림창 띄움
       if (axios.isAxiosError(error)) {
         console.error("❌ Signup error status:", error.response?.status);
         console.error("❌ Signup error data:", error.response?.data);
@@ -81,15 +86,13 @@ const SignupPage = () => {
     }
   };
 
+  // 현재 step에 맞는 필드만 유효성 검사하고 통과 시 다음 단계로 이동
   const handleNext = async () => {
     const valid = await trigger(
       step === 1 ? "email" : step === 2 ? ["password", "passwordCheck"] : "name"
     );
     if (valid) setStep((prev) => prev + 1);
   };
-
-  console.log("로컬스토리지:", localStorage);
-  console.log("세션스토리지:", sessionStorage);
 
   return (
     <div className="flex flex-col items-center justify-center h-full gap-4">
@@ -109,6 +112,7 @@ const SignupPage = () => {
           <h1 className="text-xl font-bold text-white">회원가입</h1>
         </div>
 
+        {/*Step1: 이메일 입력 */}
         {step === 1 && (
           <>
             <input
@@ -134,6 +138,7 @@ const SignupPage = () => {
           </>
         )}
 
+        {/*Step1: 비밀번호 입력 */}
         {step === 2 && (
           <>
             <div className="text-white text-sm mb-1">
@@ -200,6 +205,7 @@ const SignupPage = () => {
           </>
         )}
 
+        {/*Step1: 이름 입력 및 제출 */}
         {step === 3 && (
           <>
             {/* 프로필 이미지 */}
@@ -242,3 +248,4 @@ const SignupPage = () => {
 };
 
 export default SignupPage;
+// 해당 컴포넌트를 외부에서 사용할 수 있도록 export

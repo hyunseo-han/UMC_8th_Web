@@ -41,3 +41,5 @@ export const getMyInfo = async (): Promise<ResponseMyInfoDto> => {
 
   return data;
 };
+
+// 회원 인증 관련 API 모음. 기본 인스턴스를 이용하면서 토큰 헤더를 붙여 요청함

@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import { LOCAL_STORAGE_KEY } from "../constants/key";
 
 export const axiosInstance: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_SERVER_API_URL,
+  baseURL: import.meta.env.VITE_SERVER_API_URL, // vite 환경변수를 통해 백엔드 주소 주입
   // headers: {
   //   Authorization: `Bearer ${localStorage.getItem(
   //     LOCAL_STORAGE_KEY.accessToken
