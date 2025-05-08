@@ -17,7 +17,7 @@ const MyPage = () => {
         setData(response);
       } catch (err) {
         console.error("유저 정보 불러오기 실패", err);
-        navigate("/home");
+        navigate("/");
       }
     };
 
@@ -30,9 +30,8 @@ const MyPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white py-20">
+    <div className="flex flex-col items-center min-h-screen bg-black text-white py-20">
       <div className="flex flex-col gap-4 w-[300px] items-center">
-        {/* 상단 타이틀 */}
         <div className="relative flex items-center justify-center py-2 w-full">
           <button
             className="absolute left-0 text-white text-2xl cursor-pointer"

@@ -1,59 +1,63 @@
-import "./App.css";
 import {
   createBrowserRouter,
   RouteObject,
   RouterProvider,
 } from "react-router-dom";
+import "./App.css";
+import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import LoginPage from "./pages/LoginPage";
 import HomeLayout from "./layouts/HomeLayout";
-import HomePage from "./pages/HomePage";
 import SignupPage from "./pages/SignupPage";
 import MyPage from "./pages/MyPage";
-import SignupCompletePage from "./pages/SignupCompletePage";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedLayout from "./layouts/ProtectedLayout";
 import GoogleLoginRedirectPage from "./pages/GoogleLoginRedirectPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import LpDetailPage from "./pages/LpDetailPage";
 
-//publicRoutes
 const publicRoutes: RouteObject[] = [
   {
-    path: "/",
-    element: <HomeLayout />, //공유하는 layout(navbar, footer)
+    path: "",
+    element: <HomeLayout />,
     errorElement: <NotFoundPage />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "/login", element: <LoginPage /> },
-      { path: "/signup", element: <SignupPage /> },
-      { path: "/signup/complete", element: <SignupCompletePage /> },
-      {
-        path: "/v1/auth/google/callback",
-        element: <GoogleLoginRedirectPage />,
-      },
+      { path: "login", element: <LoginPage /> },
+      { path: "signup", element: <SignupPage /> },
+      { path: "v1/auth/google/callback", element: <GoogleLoginRedirectPage /> },
     ],
   },
 ];
 
-//protectedRoutes
-const protectedRoutes: RouteObject[] = [
+const protectRoutes: RouteObject[] = [
   {
     path: "/",
     element: <ProtectedLayout />,
     errorElement: <NotFoundPage />,
     children: [
       {
-        path: "/mypage",
+        path: "mypage",
         element: <MyPage />,
+      },
+      {
+        path: "lp/:id",
+        element: <LpDetailPage />,
       },
     ],
   },
 ];
 
-const router = createBrowserRouter([...publicRoutes, ...protectedRoutes]);
+const router = createBrowserRouter([...publicRoutes, ...protectRoutes]);
 
-const queryClient = new QueryClient(); //tanstack query
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 3,
+    },
+  },
+});
 
 function App() {
   return (
@@ -61,9 +65,7 @@ function App() {
       <AuthProvider>
         <RouterProvider router={router} />
       </AuthProvider>
-      {import.meta.env.DEV && ( //dev 환경일때만 킴
-        <ReactQueryDevtools initialIsOpen={false} />
-      )}
+      {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>
   );
 }

@@ -1,0 +1,12 @@
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-lp {
+  animation: spinSlow 8s linear infinite;
+}
