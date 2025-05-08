@@ -1,14 +1,14 @@
 import { UserSigninInformation, validateSignin } from "../utils/validate";
 import useForm from "../hooks/useForm";
-import { postSignin } from "../apis/auth";
-import { ResponseSigninDto } from "../types/auth";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { LOCAL_STORAGE_KEY } from "../constants/key";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { setItem } = useLocalStorage(LOCAL_STORAGE_KEY.accessToken);
+  const { login } = useAuth();
+
+  // const { setAccessToken } = useAuth();
+
   const { values, errors, touched, getInputProps } =
     useForm<UserSigninInformation>({
       initialValue: {
@@ -19,13 +19,17 @@ const LoginPage = () => {
     });
 
   const handleSubmit = async () => {
-    try {
-      const response: ResponseSigninDto = await postSignin(values);
-      setItem(response.data.accessToken); // accessToken 저장
-      navigate("/mypage"); // 로그인 후 이동
-    } catch (error) {
-      alert(error);
-    }
+    // try {
+    //   const response: ResponseSigninDto = await postSignin(values);
+    //   setItem(response.data.accessToken); // accessToken 저장
+    //   setAccessToken(response.data.accessToken);
+    //   console.log("✅ 로그인 성공! 토큰:", response.data.accessToken);
+    //   navigate("/mypage");
+    // } catch (error) {
+    //   console.error("❌ 로그인 실패:", error);
+    //   alert("로그인에 실패했습니다.");
+    // }
+    await login(values);
   };
 
   // 구글 로그인 리다이렉트 처리
