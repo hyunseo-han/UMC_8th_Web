@@ -3,7 +3,6 @@ import { getLPList } from "../../apis/lp";
 import { PaginationDto } from "../../types/common";
 import { QUERY_KEY } from "../../constants/key";
 
-//PaginationDto 외부 parameter로 받아옴
 function useGetLpList({ cursor, search, order, limit }: PaginationDto) {
   return useQuery({
     queryKey: [QUERY_KEY.lps, search, order],
