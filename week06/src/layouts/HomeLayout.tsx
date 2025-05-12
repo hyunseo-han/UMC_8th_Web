@@ -29,7 +29,7 @@ const HomeLayout = () => {
   }, [isSidebarOpen]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#161616]">
+    <div className="min-h-screen flex flex-col bg-[#000000]">
       <Navbar toggleSidebar={toggleSidebar} />
       {isSidebarOpen && window.innerWidth < 768 && (
         <div
