@@ -211,11 +211,11 @@ const LpDetailPage = () => {
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="w-4/5 bg-[#202024] p-2 rounded text-white mx-auto block text-center"
+          className="w-full max-w-lg bg-[#202024] p-2 rounded text-white mx-auto block text-center"
           rows={6}
         />
       ) : (
-        <p className="text-sm text-center text-gray-300 mb-4 whitespace-pre-line">
+        <p className="text-sm text-center text-gray-300 mb-4 whitespace-pre-line break-words">
           {lp.data.content}
         </p>
       )}
