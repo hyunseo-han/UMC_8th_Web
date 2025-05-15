@@ -28,3 +28,19 @@ export interface CommentApiResponse {
     hasNext: boolean;
   };
 }
+
+export type CreateCommentDto = {
+  lpId: number;
+  content: string;
+};
+
+export type UpdateCommentDto = {
+  lpId: number;
+  commentId: number;
+  content: string;
+};
+
+export type DeleteCommentDto = {
+  lpId: number;
+  commentId: number;
+};

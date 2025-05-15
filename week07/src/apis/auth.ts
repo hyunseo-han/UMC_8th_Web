@@ -4,6 +4,7 @@ import {
   ResponseMyInfoDto,
   ResponseSigninDto,
   ResponseSignupDto,
+  UpdateMyInfoDto,
 } from "../types/auth";
 import { axiosInstance } from "./axios";
 
@@ -45,5 +46,10 @@ export const getMyInfo = async (): Promise<ResponseMyInfoDto> => {
 export const postLogout = async () => {
   const { data } = await axiosInstance.post("/v1/auth/signout");
 
+  return data;
+};
+
+export const patchMyInfo = async (info: UpdateMyInfoDto) => {
+  const { data } = await axiosInstance.patch("/v1/users", info);
   return data;
 };

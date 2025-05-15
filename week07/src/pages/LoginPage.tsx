@@ -1,13 +1,11 @@
 import { UserSigninInformation, validateSignin } from "../utils/validate";
 import useForm from "../hooks/useForm";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import useLogin from "../hooks/mutations/useLogin";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
-
-  // const { setAccessToken } = useAuth();
+  const { mutate: login } = useLogin();
 
   const { values, errors, touched, getInputProps } =
     useForm<UserSigninInformation>({
@@ -19,17 +17,7 @@ const LoginPage = () => {
     });
 
   const handleSubmit = async () => {
-    // try {
-    //   const response: ResponseSigninDto = await postSignin(values);
-    //   setItem(response.data.accessToken); // accessToken 저장
-    //   setAccessToken(response.data.accessToken);
-    //   console.log("✅ 로그인 성공! 토큰:", response.data.accessToken);
-    //   navigate("/mypage");
-    // } catch (error) {
-    //   console.error("❌ 로그인 실패:", error);
-    //   alert("로그인에 실패했습니다.");
-    // }
-    await login(values);
+    login(values);
   };
 
   // 구글 로그인 리다이렉트 처리
@@ -88,7 +76,6 @@ const LoginPage = () => {
           className={`border border-[#ccc] w-[300px] p-[10px] rounded-sm focus:outline-2 placeholder-gray-200 text-white `}
           placeholder="이메일을 입력해주세요"
         />
-        {/* 새로고침 했을 때 경고 문구 안 보이게  */}
         {errors?.email && touched?.email && (
           <div className="text-red-500 text-sm">{errors.email}</div>
         )}

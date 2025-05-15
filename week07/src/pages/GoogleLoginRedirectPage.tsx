@@ -14,11 +14,17 @@ const GoogleLoginRedirectPage = () => {
     console.log("✅ GoogleRedirect 실행됨!");
 
     const urlParams = new URLSearchParams(window.location.search);
-    const accessToken = urlParams.get(LOCAL_STORAGE_KEY.accessToken);
-    const refreshToken = urlParams.get(LOCAL_STORAGE_KEY.refreshToken);
+    // const accessToken = urlParams.get(LOCAL_STORAGE_KEY.accessToken);
+    // const refreshToken = urlParams.get(LOCAL_STORAGE_KEY.refreshToken);
+
+    const accessToken = urlParams.get("accessToken");
+    const refreshToken = urlParams.get("refreshToken");
 
     if (accessToken) {
       setAccessToken(accessToken);
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken ?? "");
+      window.location.href = "/mypage";
       if (refreshToken) {
         setRefreshToken(refreshToken);
       }
