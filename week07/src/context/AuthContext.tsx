@@ -1,22 +1,24 @@
+// context/AuthContext.tsx
 import { createContext, PropsWithChildren, useContext, useState } from "react";
-import { RequestSigninDto } from "../types/auth";
+import { RequestSigninDto, ResponseMyInfoDto } from "../types/auth";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { LOCAL_STORAGE_KEY } from "../constants/key";
-import { postLogout, postSignin } from "../apis/auth";
+import { postLogout, postSignin, getMyInfo } from "../apis/auth";
 
 interface AuthContextType {
   accessToken: string | null;
   refreshToken: string | null;
+  user: ResponseMyInfoDto | null;
+  // setUser: (user: ResponseMyInfoDto | null) => void;
+  setUser: React.Dispatch<React.SetStateAction<ResponseMyInfoDto | null>>;
+
   login: (siginData: RequestSigninDto) => Promise<void>;
   logout: () => Promise<void>;
 }
 
-export const AuthContext = createContext<AuthContextType>({
-  accessToken: null,
-  refreshToken: null,
-  login: async () => {},
-  logout: async () => {},
-});
+export const AuthContext = createContext<AuthContextType>(
+  {} as AuthContextType
+);
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const {
@@ -30,32 +32,30 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     removeItem: removeRefreshokenFromStorage,
   } = useLocalStorage(LOCAL_STORAGE_KEY.refreshToken);
 
-  const [accessToken, setAccessToken] = useState<string | null>(
-    getAccessTokenFromStorage()
-  );
-  const [refreshToken, setRefreshToken] = useState<string | null>(
+  const [accessToken, setAccessToken] = useState(getAccessTokenFromStorage());
+  const [refreshToken, setRefreshToken] = useState(
     getRefreshTokenFromStorage()
   );
+  const [user, setUser] = useState<ResponseMyInfoDto | null>(null);
 
   const login = async (signinData: RequestSigninDto) => {
     try {
       const { data } = await postSignin(signinData);
-
       if (data) {
-        const newAccessToken = data.accessToken;
-        const newRefreshToken = data.refreshToken;
+        setAccessTokenInStorage(data.accessToken);
+        setRefreshTokenInStorage(data.refreshToken);
+        setAccessToken(data.accessToken);
+        setRefreshToken(data.refreshToken);
 
-        setAccessTokenInStorage(newAccessToken);
-        setRefreshTokenInStorage(newRefreshToken);
+        const userInfo = await getMyInfo();
+        setUser(userInfo);
 
-        setAccessToken(newAccessToken);
-        setRefreshToken(newRefreshToken);
         alert("로그인 성공");
         window.location.href = "/mypage";
       }
     } catch (error) {
-      console.log("로그인오류", error);
-      alert("로그인실패");
+      console.log("로그인 오류", error);
+      alert("로그인 실패");
     }
   };
 
@@ -64,10 +64,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       await postLogout();
       removeAccessTokenFromStorage();
       removeRefreshokenFromStorage();
-
       setAccessToken(null);
       setRefreshToken(null);
-
+      setUser(null);
       alert("로그아웃 성공");
     } catch (error) {
       console.error("로그아웃 오류", error);
@@ -76,7 +75,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   };
 
   return (
-    <AuthContext.Provider value={{ accessToken, refreshToken, login, logout }}>
+    <AuthContext.Provider
+      value={{ accessToken, refreshToken, login, logout, user, setUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -87,6 +88,5 @@ export const useAuth = () => {
   if (!context) {
     throw new Error("AuthContext를 찾을 수 없습니다");
   }
-
   return context;
 };
