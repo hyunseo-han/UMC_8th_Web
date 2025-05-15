@@ -26,6 +26,9 @@ const LpCard = ({ lp }: LpCardProps) => {
     }
   };
 
+  const DEFAULT_THUMBNAIL =
+    "https://media.istockphoto.com/id/1408806884/photo/12-inch-vinyl-lp-record-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=RF9dJiOjNmu4pmLSnNWITncbOspZ7BYvTyAQis_OK1U=";
+
   return (
     <div
       key={lp.id}
@@ -35,10 +38,11 @@ const LpCard = ({ lp }: LpCardProps) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <img
-        src={lp.thumbnail}
+        src={lp.thumbnail || DEFAULT_THUMBNAIL}
         alt={lp.title}
-        className="object-cover w-full h-full transition duration-300 hover:brightness-50"
+        className="object-cover w-full h-full transition duration-300 hover:brightness-50 "
       />
+
       {isHovered && (
         <div className="absolute pb-10 inset-0 z-10 bg-black/40 backdrop-brightness-75 transition-opacity duration-300 flex flex-col justify-end items-start text-white p-4 space-y-1">
           <h2 className="text-md font-bold">{lp.title}</h2>

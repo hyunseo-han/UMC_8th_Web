@@ -3,12 +3,14 @@ import { useAuth } from "../context/AuthContext";
 import { ResponseMyInfoDto } from "../types/auth";
 import { useEffect, useState } from "react";
 import { getMyInfo } from "../apis/auth";
+import useLogout from "../hooks/mutations/useLogout";
 
 const Navbar = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
-  const { accessToken, logout } = useAuth();
+  const { accessToken } = useAuth();
 
   const [user, setUser] = useState<ResponseMyInfoDto | null>(null);
   const navigate = useNavigate();
+  const { mutate: logout } = useLogout();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,8 +22,8 @@ const Navbar = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
     fetchData();
   }, [accessToken]);
 
-  const handleLogout = async () => {
-    await logout();
+  const handleLogout = () => {
+    logout();
     navigate("/");
   };
 
@@ -73,7 +75,7 @@ const Navbar = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
             </p>
             <button
               onClick={handleLogout}
-              className="px-4 py-2 hover:bg-gray-500 text-white bg-[#212121] rounded-md cursor-pointer"
+              className="px-4 py-2 hover:bg-pink-500 text-white bg-[#212121] rounded-md cursor-pointer"
             >
               로그아웃
             </button>

@@ -4,6 +4,7 @@ import { PAGINATION_ORDER } from "../enums/common";
 import { useInView } from "react-intersection-observer";
 import LpCard from "../components/LpCard/LpCard";
 import LpCardSkeletonList from "../components/LpCard/LpCardSkeletonList";
+import Modal from "../components/Modal";
 
 const HomePage = () => {
   const [searchInput, setSearchInput] = useState(""); // 입력 중인 값
@@ -43,6 +44,7 @@ const HomePage = () => {
 
   return (
     <div>
+      <Modal />
       {/* 검색창 */}
       <form
         onSubmit={handleSearchSubmit}
