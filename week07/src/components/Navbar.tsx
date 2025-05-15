@@ -1,22 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { ResponseMyInfoDto } from "../types/auth";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getMyInfo } from "../apis/auth";
 import useLogout from "../hooks/mutations/useLogout";
 
 const Navbar = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
-  const { accessToken } = useAuth();
-
-  const [user, setUser] = useState<ResponseMyInfoDto | null>(null);
   const navigate = useNavigate();
   const { mutate: logout } = useLogout();
+  const { accessToken, user, setUser } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
       if (accessToken) {
         const res = await getMyInfo();
-        setUser(res);
+        setUser(res); // 전역 상태에 저장
       }
     };
     fetchData();

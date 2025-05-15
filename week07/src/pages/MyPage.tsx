@@ -18,7 +18,7 @@ const MyPage = () => {
   const [avatar, setAvatar] = useState("");
 
   const { mutate: updateMyInfo } = useUpdateMyInfo();
-  const { logout } = useAuth();
+  const { logout, setUser } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,6 +42,22 @@ const MyPage = () => {
       alert("닉네임은 필수 사항입니다.");
       return;
     }
+
+    // Optimistic Update: 전역 상태 변경 (Navbar에 바로 반영)
+    setUser((prev) =>
+      prev
+        ? {
+            ...prev,
+            data: {
+              ...prev.data,
+              name,
+              bio,
+              avatar,
+            },
+          }
+        : null
+    );
+
     updateMyInfo({ name, bio, ...(avatar && { avatar }) });
     setFixInfo(false);
   };
