@@ -6,12 +6,12 @@ import LpCard from "../components/LpCard/LpCard";
 import LpCardSkeletonList from "../components/LpCard/LpCardSkeletonList";
 import Modal from "../components/Modal";
 import useDebounce from "../hooks/useDebounce";
+import useThrottle from "../hooks/useThrottle";
 
 const HomePage = () => {
-  const [searchInput, setSearchInput] = useState(""); // 입력 중인 값
+  const [searchInput, setSearchInput] = useState("");
   const [order, setOrder] = useState<PAGINATION_ORDER>(PAGINATION_ORDER.desc);
 
-  // 디바운싱 적용: 500ms 후에 searchInput 값을 반영
   const debouncedSearch = useDebounce(searchInput, 500);
 
   const {
@@ -23,16 +23,21 @@ const HomePage = () => {
     isError,
   } = useGetInfiniteLpList(10, debouncedSearch, order);
 
+  // ✅ fetchNextPage를 쓰로틀링한 함수로 감싸기 (3초 제한)
+  const throttledFetchNextPage = useThrottle(() => {
+    if (!isFetching && hasNextPage) {
+      fetchNextPage();
+    }
+  }, 3000);
+
   const { ref, inView } = useInView({ threshold: 0 });
 
+  // ✅ inView되었을 때 throttledFetchNextPage 사용
   useEffect(() => {
-    if (inView && hasNextPage && !isFetching) {
-      const timer = setTimeout(() => {
-        fetchNextPage();
-      });
-      return () => clearTimeout(timer);
+    if (inView) {
+      throttledFetchNextPage();
     }
-  }, [inView, isFetching, hasNextPage, fetchNextPage]);
+  }, [inView, throttledFetchNextPage]);
 
   if (isPending) return <div>Loading...</div>;
   if (isError) return <div>Error.</div>;
