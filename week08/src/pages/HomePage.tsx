@@ -5,11 +5,14 @@ import { useInView } from "react-intersection-observer";
 import LpCard from "../components/LpCard/LpCard";
 import LpCardSkeletonList from "../components/LpCard/LpCardSkeletonList";
 import Modal from "../components/Modal";
+import useDebounce from "../hooks/useDebounce";
 
 const HomePage = () => {
   const [searchInput, setSearchInput] = useState(""); // 입력 중인 값
-  const [search, setSearch] = useState(""); // 실제 쿼리에 적용될 값
   const [order, setOrder] = useState<PAGINATION_ORDER>(PAGINATION_ORDER.desc);
+
+  // 디바운싱 적용: 500ms 후에 searchInput 값을 반영
+  const debouncedSearch = useDebounce(searchInput, 500);
 
   const {
     data: lps,
@@ -18,26 +21,18 @@ const HomePage = () => {
     isPending,
     fetchNextPage,
     isError,
-  } = useGetInfiniteLpList(10, search, order);
+  } = useGetInfiniteLpList(10, debouncedSearch, order);
 
-  const { ref, inView } = useInView({
-    threshold: 0,
-  });
+  const { ref, inView } = useInView({ threshold: 0 });
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetching) {
       const timer = setTimeout(() => {
         fetchNextPage();
       });
-
       return () => clearTimeout(timer);
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSearch(searchInput);
-  };
 
   if (isPending) return <div>Loading...</div>;
   if (isError) return <div>Error.</div>;
@@ -45,9 +40,10 @@ const HomePage = () => {
   return (
     <div>
       <Modal />
+
       {/* 검색창 */}
       <form
-        onSubmit={handleSearchSubmit}
+        onSubmit={(e) => e.preventDefault()}
         className="mt-5 flex justify-center items-center"
       >
         <input
