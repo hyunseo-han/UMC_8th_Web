@@ -25,7 +25,7 @@ function useGetInfiniteLpList(
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
-      console.log("✅ lastPage:", lastPage);
+      // console.log("✅ lastPage:", lastPage);
       return lastPage.data.hasNext ? lastPage.data.nextCursor : undefined;
     },
   });

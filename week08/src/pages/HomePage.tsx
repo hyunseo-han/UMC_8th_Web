@@ -12,7 +12,7 @@ const HomePage = () => {
   const [searchInput, setSearchInput] = useState("");
   const [order, setOrder] = useState<PAGINATION_ORDER>(PAGINATION_ORDER.desc);
 
-  const debouncedSearch = useDebounce(searchInput, 500);
+  const debouncedSearch = useDebounce(searchInput, 3000);
 
   const {
     data: lps,
@@ -23,16 +23,17 @@ const HomePage = () => {
     isError,
   } = useGetInfiniteLpList(10, debouncedSearch, order);
 
-  // ✅ fetchNextPage를 쓰로틀링한 함수로 감싸기 (3초 제한)
+  // fetchNextPage를 쓰로틀링한 함수로 감싸기 (3초 제한)
   const throttledFetchNextPage = useThrottle(() => {
     if (!isFetching && hasNextPage) {
+      console.log("🔁 fetchNextPage 실행됨:", new Date().toLocaleTimeString());
       fetchNextPage();
     }
   }, 3000);
 
   const { ref, inView } = useInView({ threshold: 0 });
 
-  // ✅ inView되었을 때 throttledFetchNextPage 사용
+  // inView되었을 때 throttledFetchNextPage 사용
   useEffect(() => {
     if (inView) {
       throttledFetchNextPage();
